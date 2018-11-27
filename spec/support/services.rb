@@ -32,5 +32,7 @@ def another_consumer
 end
 
 def stub_services
-  connector; this; consumer
+  connector
+  this
+  consumer
 end

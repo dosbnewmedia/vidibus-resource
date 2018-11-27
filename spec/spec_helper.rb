@@ -3,9 +3,8 @@ SimpleCov.start do
   add_filter '/spec/'
 end
 
-require 'rspec'
-require 'mongoid'
 require 'rr'
+require 'database_cleaner'
 require 'webmock/rspec'
 require 'vidibus-resource'
 
@@ -19,8 +18,16 @@ end
 RSpec.configure do |config|
   config.include WebMock::API
   config.mock_with :rr
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+  
   config.before(:each) do
-    Mongoid::Sessions.default.collections.
-      select {|c| c.name !~ /system/}.each(&:drop)
+    DatabaseCleaner.start
+  end
+  
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 end
