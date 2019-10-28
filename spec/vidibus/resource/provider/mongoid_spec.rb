@@ -97,8 +97,8 @@ describe Vidibus::Resource::Provider::Mongoid do
     end
 
     it 'should send an API request to the consumer service' do
-      stub_request(:post, "#{consumer.url}/api/resources/provider_models/#{subject.uuid}").
-        with(:body => {:resource => JSON.generate(subject.resourceable_hash), :realm => realm_uuid, :service => this.uuid, :sign => '1b39337f4dee30a15bed7651cf8749b6efb60d71c434160f301f1e72545f3886'}).
+      stub_request(:post, "#{consumer.url}/backend/api/resources/provider_models/#{subject.uuid}").
+        with(:body => {:resource => JSON.generate(subject.resourceable_hash), :realm => realm_uuid, :service => this.uuid, :sign => '4977889dcd02e5ae5cd09a1eeb74efe98803cfd8721f4192efda39a31b09e134'}).
           to_return(:status => 200, :body => "", :headers => {})
       subject.add_resource_consumer(consumer.uuid, realm_uuid)
       Delayed::Job.first.invoke_job
@@ -156,7 +156,7 @@ describe Vidibus::Resource::Provider::Mongoid do
     end
 
     it 'should send an API request to the consumer service' do
-      path = "/api/resources/provider_models/#{subject.uuid}"
+      path = "/backend/api/resources/provider_models/#{subject.uuid}"
       mock(consumer_client).delete(path, {})
       subject.remove_resource_consumer(consumer.uuid, realm_uuid)
     end
@@ -181,9 +181,9 @@ describe Vidibus::Resource::Provider::Mongoid do
           resource: JSON.generate(subject.resourceable_hash),
           realm: realm_uuid,
           service: this.uuid,
-          sign: '914686b8f0544f7bbcbbf76dcc64ebd754ffa125e1354baaddc5fc0d87eea176'
+          sign: '6a637a923f6b717d8042de916b610a69ad37330e89c054e26a251c107b7e8f44'
         }
-        stub_request(:put, "#{consumer.url}/api/resources/provider_models/#{subject.uuid}").
+        stub_request(:put, "#{consumer.url}/backend/api/resources/provider_models/#{subject.uuid}").
           with(:body => body).
           to_return(:status => 200, :body => '', :headers => {})
         subject.refresh_resource_consumer(consumer.uuid, realm_uuid)

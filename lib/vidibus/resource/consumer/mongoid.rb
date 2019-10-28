@@ -136,7 +136,7 @@ module Vidibus::Resource
       end
 
       def resource_uri
-        @resource_uri ||= "/api/resources/#{self.class.to_s.tableize}/#{resource_uuid || uuid}"
+        @resource_uri ||= "/backend/api/resources/#{self.class.to_s.tableize}/#{resource_uuid || uuid}"
       end
     end
   end

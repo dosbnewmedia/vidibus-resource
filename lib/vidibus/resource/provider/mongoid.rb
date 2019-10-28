@@ -75,7 +75,7 @@ module Vidibus::Resource
       private
 
       def resource_uri
-        @resource_uri ||= "/api/resources/#{self.class.to_s.tableize}/#{uuid}"
+        @resource_uri ||= "/backend/api/resources/#{self.class.to_s.tableize}/#{uuid}"
       end
 
       # Performs given block on each resource consumer service.
